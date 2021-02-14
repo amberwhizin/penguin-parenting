@@ -21,6 +21,8 @@ var blocks;
 var cursors;
 var platforms;
 var food;
+var score = 0;
+var scoreText;
 
 var game = new Phaser.Game(config);
 
@@ -29,11 +31,11 @@ function preload() {
   this.load.image('ground', 'assets/images/beach_sand.png');
   this.load.image('seaweed', 'assets/images/waterplant.png');
   this.load.image('fish', 'assets/images/fishies.png');
+  this.load.image('whale', 'assets/images/whale.png');
   this.load.spritesheet('penguin1', 'assets/images/penguin.png', {
     frameWidth: 32,
     frameHeight: 32,
   });
-  this.load.image('whale', 'assets/images/whale.png');
 }
 
 function create() {
@@ -82,6 +84,11 @@ function create() {
   food.children.iterate(function (child) {
     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
   });
+  // location of text, default score...
+  scoreText = this.add.text(16, 16, 'score: 0', {
+    fontSize: '32px',
+    fill: '#000',
+  });
 
   this.physics.add.collider(player, blocks);
   this.physics.add.collider(player, platforms);
@@ -111,4 +118,7 @@ function update() {
 }
 function collectFood(player, fish) {
   fish.disableBody(true, true);
+
+  score += 1;
+  scoreText.setText('Score: ' + score);
 }
