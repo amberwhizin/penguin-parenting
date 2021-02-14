@@ -103,17 +103,20 @@ function create() {
 
 function update() {
   if (cursors.left.isDown) {
-    player.setVelocityX(-185);
+    player.setVelocityX(-160);
     player.anims.play('left', true);
   } else if (cursors.right.isDown) {
-    player.setVelocityX(185);
+    player.setVelocityX(160);
     player.anims.play('right', true);
   } else {
     player.setVelocityX(0);
     player.anims.play('turn');
   }
-  if (cursors.up.isDown && player.body.touching.down) {
-    player.setVelocityY(-360);
+  if (cursors.up.isDown) {
+    player.setVelocityY(-320);
+  }
+  if (cursors.down.isDown) {
+    player.setVelocityY(220);
   }
 }
 function collectFood(player, fish) {
