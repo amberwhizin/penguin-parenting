@@ -16,15 +16,17 @@ var config = {
   },
 };
 
-var block;
 var player;
+var blocks;
+var cursors;
 
 var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('background', 'assets/images/underwater tileable.png');
-  this.load.image('block', 'assets/images/waterplant.png');
-  this.load.spritesheet('penguin', 'assets/images/lr_penguin2.png', {
+
+  this.load.image('blocks', 'assets/images/waterplant.png');
+  this.load.spritesheet('penguin', 'assets/images/tux.png', {
     frameWidth: 32,
     frameHeight: 48,
   });
@@ -34,15 +36,52 @@ function preload() {
 function create() {
   this.add.image(400, 300, 'background');
 
-  block = this.physics.add.staticGroup();
+  blocks = this.physics.add.staticGroup();
 
-  block.create(470, 490, 'seaweed').setScale(6).refreshBody();
-  //left block
-  block.create(250, 520, 'seaweed').setScale(4).refreshBody();
+  blocks.create(470, 490, 'seaweed').setScale(6).refreshBody();
+  //left blocks
+  blocks.create(250, 520, 'seaweed').setScale(4).refreshBody();
 
-  player = this.physics.add.sprite(100, 450, 'penguin');
+  // create sprite
+  player = this.physics.add.sprite(550, 250, 'penguin');
 
   player.setBounce(0.2);
   player.setCollideWorldBounds(true);
+
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('penguin', { start: 0, end: 2 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+  this.anims.create({
+    key: 'turn',
+    frames: [{ key: 'penguin', frame: 4 }],
+    frameRate: 20,
+  });
+  this.anims.create({
+    key: 'right',
+    frames: this.anims.generateFrameNumbers('penguin', { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.physics.add.collider(player, blocks);
+
+  // cursors = this.input.keyboard.createCursorKeys();
+
+  // if (cursors.left.isDown) {
+  //   player.setVelocityX(-160);
+  //   player.anims.play('left', true);
+  // } else if (cursors.right.isDown) {
+  //   player.setVelocityX(160);
+  //   player.anims.play('right', true);
+  // } else {
+  //   player.setVelocityX(0);
+  //   player.anims.play('turn');
+  // }
+  // if (cursors.up.isDown && player.body.touching.down) {
+  //   player.setVelocityY(-330);
+  // }
 }
 function update() {}
