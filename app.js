@@ -27,8 +27,8 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image('background', 'assets/images/underwater tileable.png');
   this.load.image('ground', 'assets/images/beach_sand.png');
-  this.load.image('blocks', 'assets/images/waterplant.png');
-  this.load.image('blocks', 'assets/images/fishies.png');
+  this.load.image('seaweed', 'assets/images/waterplant.png');
+  this.load.image('fish', 'assets/images/fishies.png');
   this.load.spritesheet('penguin1', 'assets/images/penguin.png', {
     frameWidth: 32,
     frameHeight: 32,
@@ -43,12 +43,12 @@ function create() {
 
   blocks = this.physics.add.staticGroup();
 
-  blocks.create(470, 490, 'seaweed').setScale(6).refreshBody();
+  blocks.create(470, 490, 'seaweed').setScale(5).refreshBody();
   //left blocks
   blocks.create(250, 520, 'seaweed').setScale(4).refreshBody();
 
   // create sprite
-  player = this.physics.add.sprite(200, 450, 'penguin1').setScale(1.5);
+  player = this.physics.add.sprite(100, 250, 'penguin1');
 
   player.setBounce(0.2);
   player.setCollideWorldBounds(true);
@@ -71,16 +71,29 @@ function create() {
     repeat: -1,
   });
 
+  cursors = this.input.keyboard.createCursorKeys();
+
+  food = this.physics.add.group({
+    key: 'fish',
+    repeat: 3,
+    setXY: { x: 4, y: 0, stepX: 70 },
+  });
+
+  food.children.iterate(function (child) {
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+  });
+
   this.physics.add.collider(player, blocks);
   this.physics.add.collider(player, platforms);
 
-  cursors = this.input.keyboard.createCursorKeys();
+  // does this work?
+  this.physics.add.collider(food, blocks);
+  this.physics.add.collider(food, platforms);
 
-  food = children.iterate(function (child) {
-
-    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-  })
+  //checks if there was an overlap between any food and the player, if there is then use the collectFood func
+  this.physics.add.overlap(player, food, collectFood, null, this);
 }
+
 function update() {
   if (cursors.left.isDown) {
     player.setVelocityX(-185);
@@ -95,4 +108,7 @@ function update() {
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-360);
   }
+}
+function collectFood(player, fish) {
+  fish.disableBody(true, true);
 }
