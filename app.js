@@ -29,6 +29,7 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image('background', 'assets/images/underwater tileable.png');
   this.load.image('ground', 'assets/images/beach_sand.png');
+  this.load.image('rock', 'assets/images/large_rock.png');
   this.load.image('seaweed', 'assets/images/waterplant.png');
   this.load.image('fish', 'assets/images/fishies.png');
   this.load.image('whale', 'assets/images/whale.png');
@@ -45,9 +46,12 @@ function create() {
 
   blocks = this.physics.add.staticGroup();
 
-  blocks.create(470, 490, 'seaweed').setScale(5).refreshBody();
+  blocks.create(670, 530, 'rock').setScale(5).refreshBody();
+  blocks.create(550, 530, 'seaweed').setScale(3).refreshBody();
   //left blocks
-  blocks.create(250, 520, 'seaweed').setScale(4).refreshBody();
+  blocks.create(250, 520, 'rock').setScale(5).refreshBody();
+  blocks.create(350, 540, 'seaweed').setScale(3).refreshBody();
+  blocks.create(450, 540, 'rock').setScale(4).refreshBody();
 
   // create sprite
   player = this.physics.add.sprite(100, 250, 'penguin1');
@@ -103,20 +107,21 @@ function create() {
 
 function update() {
   if (cursors.left.isDown) {
-    player.setVelocityX(-160);
+    player.setVelocityX(-170);
     player.anims.play('left', true);
   } else if (cursors.right.isDown) {
-    player.setVelocityX(160);
+    player.setVelocityX(170);
     player.anims.play('right', true);
   } else {
     player.setVelocityX(0);
     player.anims.play('turn');
   }
+  // water effect
   if (cursors.up.isDown) {
-    player.setVelocityY(-320);
+    player.setVelocityY(-220);
   }
   if (cursors.down.isDown) {
-    player.setVelocityY(220);
+    player.setVelocityY(100);
   }
 }
 function collectFood(player, fish) {
