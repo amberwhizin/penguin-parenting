@@ -19,12 +19,13 @@ var config = {
 var player;
 var blocks;
 var cursors;
+var platforms;
 
 var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('background', 'assets/images/underwater tileable.png');
-
+  this.load.image('ground', 'assets/images/beach_sand.png');
   this.load.image('blocks', 'assets/images/waterplant.png');
   this.load.spritesheet('penguin', 'assets/images/tux.png', {
     frameWidth: 32,
@@ -34,10 +35,12 @@ function preload() {
 }
 
 function create() {
+  platforms = this.physics.add.staticGroup();
+  platforms.create(400, 655, 'ground').setScale(2).refreshBody();
   this.add.image(400, 300, 'background');
 
   blocks = this.physics.add.staticGroup();
-
+  
   blocks.create(470, 490, 'seaweed').setScale(6).refreshBody();
   //left blocks
   blocks.create(250, 520, 'seaweed').setScale(4).refreshBody();
@@ -67,6 +70,7 @@ function create() {
   });
 
   this.physics.add.collider(player, blocks);
+  this.physics.add.collider(player, platforms);
 
   cursors = this.input.keyboard.createCursorKeys();
 }
