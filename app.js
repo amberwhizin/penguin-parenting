@@ -20,6 +20,7 @@ var player;
 var blocks;
 var cursors;
 var platforms;
+var food;
 
 var game = new Phaser.Game(config);
 
@@ -27,6 +28,7 @@ function preload() {
   this.load.image('background', 'assets/images/underwater tileable.png');
   this.load.image('ground', 'assets/images/beach_sand.png');
   this.load.image('blocks', 'assets/images/waterplant.png');
+  this.load.image('blocks', 'assets/images/fishies.png');
   this.load.spritesheet('penguin1', 'assets/images/penguin.png', {
     frameWidth: 32,
     frameHeight: 32,
@@ -73,6 +75,11 @@ function create() {
   this.physics.add.collider(player, platforms);
 
   cursors = this.input.keyboard.createCursorKeys();
+
+  food = children.iterate(function (child) {
+
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+  })
 }
 function update() {
   if (cursors.left.isDown) {
