@@ -47,10 +47,10 @@ function create() {
   blocks = this.physics.add.staticGroup();
 
   blocks.create(670, 530, 'rock').setScale(5).refreshBody();
-  blocks.create(550, 530, 'seaweed').setScale(3).refreshBody();
+  this.add.image(550, 530, 'seaweed').setScale(3)
   //left blocks
   blocks.create(250, 520, 'rock').setScale(5).refreshBody();
-  blocks.create(350, 540, 'seaweed').setScale(3).refreshBody();
+  this.add.image(350, 540, 'seaweed').setScale(3)
   blocks.create(450, 540, 'rock').setScale(4).refreshBody();
 
   // create sprite
@@ -97,8 +97,8 @@ function create() {
   this.physics.add.collider(player, blocks);
   this.physics.add.collider(player, platforms);
 
-  // does this work?
   this.physics.add.collider(food, blocks);
+  // does this work?
   this.physics.add.collider(food, platforms);
 
   //checks if there was an overlap between any food and the player, if there is then use the collectFood func
