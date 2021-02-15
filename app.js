@@ -121,7 +121,7 @@ function update() {
     player.setVelocityY(-220);
   }
   if (cursors.down.isDown) {
-    player.setVelocityY(100);
+    player.setVelocityY(150);
   }
 }
 function collectFood(player, fish) {
