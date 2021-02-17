@@ -178,7 +178,7 @@ function collectFood(player, fish) {
     // then create whale from killerWhales
     var whale = killerWhales.create(x, 16, 'whale');
     whale.setBounce(1);
-    whale.setCollideWorldBounds(true);
+    whale.setCollideWorldBounds(false);
     whale.setVelocity(Phaser.Math.Between(-200, 200), 20);
     whale.allowGravity = false;
   }
