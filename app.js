@@ -24,6 +24,7 @@ var food;
 var killerWhales;
 var scoreText;
 var score = 0;
+
 var gameOver = false;
 
 var game = new Phaser.Game(config);
